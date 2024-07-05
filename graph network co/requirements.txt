@@ -1,0 +1,8 @@
+dgl -f https://data.dgl.ai/wheels/torch-2.1/cu121/repo.html
+pandas
+tqdm
+yaml
+pydantic
+gurobipy
+torch==2.1.*
+numpy==1.*
