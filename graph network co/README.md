@@ -12,6 +12,11 @@ Here I present a generalization of the original method with a few key changes:
 This box plot compares solution quality on 200 node graphs using the tree search guided by three node predictors: a graph convolutional network (GCN), a random number, and the degree (number of neighbours) of the node - picking low degree nodes first. An MWIS solution found by Gurobi with a time limit of 60 seconds is used as a baseline. The GCN clearly outperforms the alternatives, supporting the original assertion that the neural network provides some benefit to the tree search algorithm.
 ![alt text](image.png)
 
+We can also compare the solutions found by the tree search against those found using Gurobi. The figure below compares solution quality after 15, 30, and 60 seconds for each solver on problem instances between 1000 and 2000 nodes. With shorter search times the tree search outperforms Gurobi in almost all situations. It's relative performance weakens as the solution time increases. With a solution time of 1 minute the tree search still outperforms Gurobi on 70% of test cases.
+![alt text](image-1.png)
+
+Notably, Gurobi performs better relatively as the MWIS increases. There could be two possibilites of why this occurs: the larger MWIS could be a result of a smaller set of higher valued nodes - in which case the neural network may not be adequately weighing these values; or the larger MWIS could be a result of a larger set of lower valued nodes - indicating the neural network is over-weighting high value nodes. Determining which of these scenarios is occuring would provide some guidance for future improvement of the algorithm.
+
 ## How to use
 There are three files:
 - Data_creation.py has helper functions for generating a dataset. It includes two solvers: Gurobi, a commercial mathematical programming solver; and networkx, a common Python library with tools for analyzing graphs. The Gurobi solver solves the MWIS problem directly using a integer programming approach. The networkx solver solves the maximal (not maximum) independent set problem without consideration of node weights. The Gurobi solver will give higher quality solutions at the expense of longer solve times and license requirements.
